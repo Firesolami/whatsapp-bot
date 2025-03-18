@@ -33,6 +33,11 @@ app.get("/qr", (req, res) => {
   res.sendFile(qrPath, { root: __dirname });
 });
 
+// Health check
+app.get("/ping", (req, res) => {
+  res.status(200).send("pong");
+});
+
 // Start the server
 app.listen(port, () => {
   console.log(`QR Code server running on PORT: ${port}`);
