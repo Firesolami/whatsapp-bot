@@ -12,7 +12,6 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
-    "dotenv": "^16.4.7",
     "qrcode-terminal": "^0.12.0",
     "whatsapp-web.js": "^1.26.1-alpha.3"
   },
