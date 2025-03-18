@@ -57,15 +57,30 @@ client.on('message', async (message) => {
   if (message.author === process.env.WA_PHONE_NUMBER) {
     console.log(`Message from ${process.env.WA_USERNAME}: ${message.body}`);
 
-    if (message.body.toLowerCase() === process.env.TAG_ALL_COMMAND) {
+    if (
+      message.body.toLowerCase() === process.env.TAG_ALL_COMMAND &&
+      message.from.includes('@g.us')
+    ) {
       console.log('Request to tag all group chat members');
 
       try {
         const chat = await client.getChatById(message.from);
         const participants = chat.participants;
 
-        const mentions = participants.map((p) => p.id._serialized);
-        const mentionText = participants.map((p) => `@${p.id.user}`).join(' ');
+        const mentions = participants
+          .map((p) => p.id._serialized)
+          .filter((p) => {
+            return p !== message.author && p !== message.to;
+          });
+        const mentionText = participants
+          .map((p) => `@${p.id.user}`)
+          .filter((p) => {
+            return (
+              p !== `@${message.author.split('@')[0]}` &&
+              p !== `@${message.to.split('@')[0]}`
+            );
+          })
+          .join(' ');
 
         await chat.sendMessage(`${mentionText}`, { mentions });
         console.log('Successfully tagged all group members');
