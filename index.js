@@ -1,7 +1,14 @@
-require('dotenv');
+const fs = require("fs");
+const qrcode = require("qrcode");
+
+const express = require("express");
+const app = express();
+const port = process.env.PORT || 3000;
+
 const qrcode = require('qrcode-terminal');
 const { Client, LocalAuth } = require('whatsapp-web.js');
 
+// Client setup
 const client = new Client({
   authStrategy: new LocalAuth({
     dataPath: '/app/.wwebjs_auth'
@@ -11,9 +18,24 @@ const client = new Client({
   }
 });
 
-client.on('qr', (qr) => {
-  qrcode.generate(qr, { small: true });
-  console.log('Scan this QR code with your WhatsApp app.');
+// QR Code Generation
+let qrPath = "./qr.png";
+
+client.on("qr", async (qr) => {
+    console.log("QR Code received, generating image");
+
+    await qrcode.toFile(qrPath, qr);
+    
+    console.log('QR Code generated');
+});
+
+app.get("/qr", (req, res) => {
+  res.sendFile(qrPath, { root: __dirname });
+});
+
+// Start the server
+app.listen(port, () => {
+  console.log(`QR Code server running on PORT: ${port}`);
 });
 
 client.on('ready', () => {
