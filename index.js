@@ -1,11 +1,11 @@
-const fs = require("fs");
-const qrcode = require("qrcode");
+require('dotenv').config();
+const fs = require('fs');
+const qrcode = require('qrcode');
 
-const express = require("express");
+const express = require('express');
 const app = express();
 const port = process.env.PORT || 3000;
 
-const qrcode = require('qrcode-terminal');
 const { Client, LocalAuth } = require('whatsapp-web.js');
 
 // Client setup
@@ -19,23 +19,29 @@ const client = new Client({
 });
 
 // QR Code Generation
-let qrPath = "./qr.png";
+let qrPath = './qr.png';
 
-client.on("qr", async (qr) => {
-    console.log("QR Code received, generating image");
+client.on('qr', async (qr) => {
+  console.log('QR Code received, generating image');
 
-    await qrcode.toFile(qrPath, qr);
-    
-    console.log('QR Code generated');
+  await qrcode.toFile(qrPath, qr);
+
+  console.log('QR Code generated');
 });
 
-app.get("/qr", (req, res) => {
-  res.sendFile(qrPath, { root: __dirname });
+app.get('/qr/:secret', (req, res) => {
+  const { secret } = req.params;
+
+  if (secret === process.env.ENDPOINT_SECRET) {
+    res.sendFile(qrPath, { root: __dirname });
+  } else {
+    res.status(401).send('Go away');
+  }
 });
 
 // Health check
-app.get("/ping", (req, res) => {
-  res.status(200).send("pong");
+app.get('/ping', (req, res) => {
+  res.status(200).send('pong');
 });
 
 // Start the server
@@ -48,8 +54,8 @@ client.on('ready', () => {
 });
 
 client.on('message', async (message) => {
-  if (message.author === process.env.PHONE_NUMBER) {
-    console.log(`Message from ${process.env.USERNAME}: ${message.body}`);
+  if (message.author === process.env.WA_PHONE_NUMBER) {
+    console.log(`Message from ${process.env.WA_USERNAME}: ${message.body}`);
 
     if (message.body.toLowerCase() === process.env.TAG_ALL_COMMAND) {
       console.log('Request to tag all group chat members');
