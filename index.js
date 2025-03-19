@@ -97,7 +97,7 @@ client.on('message', async (message) => {
       `@${process.env.WA_BOT_PHONE_NUMBER} ${process.env.TAG_ALL_COMMAND}`
     ) {
       console.log(`Request from ${message.from} to tag all members.`);
-      message.reply('Bro thought');
+      message.reply('Lmao bro thought');
     }
     const unreadChat = await client.getChatById(message.from);
     await unreadChat.sendSeen();
