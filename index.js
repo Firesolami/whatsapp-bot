@@ -54,7 +54,10 @@ client.on('ready', () => {
 });
 
 client.on('message', async (message) => {
-  if (message.author === process.env.WA_PHONE_NUMBER && message.body.startsWith(`@${process.env.WA_BOT_PHONE_NUMBER}`)) {
+  if (
+    message.author === process.env.WA_PHONE_NUMBER &&
+    message.body.startsWith(`@${process.env.WA_BOT_PHONE_NUMBER}`)
+  ) {
     console.log(`Message from ${process.env.WA_USERNAME}: ${message.body}`);
 
     if (
@@ -89,9 +92,12 @@ client.on('message', async (message) => {
       }
     }
   } else {
-    if (message.body.trim().toLowerCase() === `@${process.env.WA_BOT_PHONE_NUMBER} ${process.env.TAG_ALL_COMMAND}`){
+    if (
+      message.body.trim().toLowerCase() ===
+      `@${process.env.WA_BOT_PHONE_NUMBER} ${process.env.TAG_ALL_COMMAND}`
+    ) {
       console.log(`Request from ${message.from} to tag all members.`);
-      message.reply("Bro thought");
+      message.reply('Bro thought');
     }
   }
 });
