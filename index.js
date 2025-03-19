@@ -99,6 +99,8 @@ client.on('message', async (message) => {
       console.log(`Request from ${message.from} to tag all members.`);
       message.reply('Bro thought');
     }
+    const unreadChat = await client.getChatById(message.from);
+    await unreadChat.sendSeen();
   }
 });
 
