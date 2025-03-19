@@ -61,7 +61,7 @@ client.on('message', async (message) => {
     console.log(`Message from ${process.env.WA_USERNAME}: ${message.body}`);
 
     if (
-      message.body.toLowerCase() === process.env.TAG_ALL_COMMAND &&
+      message.body.toLowerCase().includes(process.env.TAG_ALL_COMMAND) &&
       message.from.includes('@g.us')
     ) {
       console.log('Request to tag all group chat members');
