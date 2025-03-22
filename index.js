@@ -53,6 +53,7 @@ client.on('ready', () => {
 });
 
 client.on('message', async (message) => {
+  // Group messages
   if (
     message.author === process.env.WA_PHONE_NUMBER &&
     message.body.startsWith(`@${process.env.WA_BOT_PHONE_NUMBER}`)
@@ -100,6 +101,34 @@ client.on('message', async (message) => {
     }
     const unreadChat = await client.getChatById(message.from);
     await unreadChat.sendSeen();
+  }
+
+  // DMs
+  if (
+    message.author === process.env.WA_PHONE_NUMBER &&
+    !message.from.includes('@g.us')
+  ) {
+    try {
+      if (message.hasMedia) {
+        const media = await message.downloadMedia();
+
+        console.log('Received media');
+
+        if (!media.mimetype.startsWith('image/')) {
+          console.log('Unsupported file type: ', media.mimetype);
+          await message.reply('Only supports pictures for now');
+          return;
+        }
+
+        await client.sendMessage(message.from, media, {
+          sendMediaAsSticker: true
+        });
+        console.log('Sent sticker');
+      }
+    } catch (error) {
+      console.error('Error converting to sticker:', error);
+      message.reply('Failed to convert to sticker.');
+    }
   }
 });
 

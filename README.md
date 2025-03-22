@@ -22,17 +22,20 @@ Hopefully I'll not forget to update the docs when I add a new feature lol
 ## Setup
 
 1. Clone the repository:
+
 ```bash
 git clone https://github.com/firesolami/whatsapp-bot.git
 cd whatsapp-bot
 ```
 
 2. Install dependencies:
+
 ```bash
 npm i
 ```
 
 3. Create a `.env` file in the root directory with the following variables:
+
 ```env
 PORT=3000
 WA_USERNAME="your-name"
@@ -43,16 +46,19 @@ ENDPOINT_SECRET="your-secret-key"
 ```
 
 4. Start the bot:
+
 ```bash
 npm start
 ```
 
 For development with auto-reload:
+
 ```bash
 npm run dev
 ```
 
 5. When first starting the bot, scan the QR code available at:
+
 ```
 http://localhost:3000/qr/your-endpoint-secret
 ```
