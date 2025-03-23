@@ -4,3 +4,4 @@ node_modules
 .env*
 qr.png
 temp.txt
+RemoteAuth.zip

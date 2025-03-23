@@ -1,23 +1,25 @@
 {
-  "name": "wa-bot",
-  "version": "1.0.0",
-  "main": "index.js",
-  "scripts": {
-    "start": "node index.js",
-    "dev": "node --watch index.js",
-    "format": "prettier . --write"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": "",
-  "dependencies": {
-    "dotenv": "^16.4.7",
-    "express": "^4.21.2",
-    "qrcode": "^1.5.4",
-    "whatsapp-web.js": "^1.26.1-alpha.3"
-  },
-  "devDependencies": {
-    "prettier": "^3.5.3"
-  }
+    "name": "wa-bot",
+    "version": "1.0.0",
+    "main": "index.js",
+    "scripts": {
+        "start": "node index.js",
+        "dev": "node --watch index.js",
+        "format": "prettier . --write"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "description": "",
+    "dependencies": {
+        "dotenv": "^16.4.7",
+        "express": "^4.21.2",
+        "mongoose": "^8.12.2",
+        "qrcode": "^1.5.4",
+        "whatsapp-web.js": "^1.26.1-alpha.3",
+        "wwebjs-mongo": "^1.1.0"
+    },
+    "devDependencies": {
+        "prettier": "^3.5.3"
+    }
 }
